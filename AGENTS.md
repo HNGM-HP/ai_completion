@@ -112,7 +112,32 @@ python -u src/scripts/test_llm_providers.py
 - `DATABASE_URL`：PostgreSQL 连接串。
 - `FEISHU_APP_ID` / `FEISHU_APP_SECRET`：飞书应用凭证。
 - `FEISHU_PUSH_CHAT_ID`：应用推送固定群会话 ID。
-- `FEISHU_EVENT_ENCRYPT_KEY` / `FEISHU_EVENT_VERIFICATION_TOKEN`：事件长连接配置。
+- `FEISHU_EVENT_ENCRYPT_KEY` / `FEISHU_EVENT_VERIFICATION_TOKEN`：事件长连接配置（WebSocket模式无需配置）。
+
+### 飞书应用权限清单（快捷导入）
+
+```json
+{
+  "scopes": {
+    "tenant": [
+      "im:message:send",
+      "im:message:receive",
+      "im:chat:readonly",
+      "drive:drive",
+      "drive:drive:readonly",
+      "space:document:retrieve",
+      "docx:document",
+      "docx:document:create",
+      "im:message.card:send",
+      "card:action:trigger",
+      "im:message.group_msg",
+      "im:message.group_msg:readonly",
+      "im:chat"
+    ],
+    "user": []
+  }
+}
+```
 - `GITHUB_TOKEN`：GitHub GraphQL Token。
 - `LLM_PROVIDER`：LLM 提供方（默认 `glm`）。
 - `LLM_MODEL`：默认模型（可写成 `provider:model`）。

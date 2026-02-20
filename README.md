@@ -310,15 +310,67 @@ systemctl disable ai-briefing.timer
 ### 7.2 故障排查 (Troubleshooting)
 
 **问题：没有收到飞书消息？**
-1.  检查服务日志：
-    ```bash
-    journalctl -u ai-briefing.service -n 50 -e
-    ```
-2.  检查 `push_log` 数据库表：
-    ```sql
-    SELECT * FROM push_log ORDER BY created_at DESC LIMIT 5;
-    ```
-3.  验证 `.env` 中的 `FEISHU_APP_ID`/`FEISHU_APP_SECRET`/`FEISHU_PUSH_CHAT_ID` 是否有效，并确认应用已开通 `im:message:send` 权限。
+
+**1. 检查应用权限配置**
+
+请确保飞书应用已开通以下所有权限（共13个）：
+
+**快捷导入权限（JSON配置）：**
+```json
+{
+  "scopes": {
+    "tenant": [
+      "im:message:send",
+      "im:message:receive",
+      "im:chat:readonly",
+      "drive:drive",
+      "drive:drive:readonly",
+      "space:document:retrieve",
+      "docx:document",
+      "docx:document:create",
+      "im:message.card:send",
+      "card:action:trigger",
+      "im:message.group_msg",
+      "im:message.group_msg:readonly",
+      "im:chat"
+    ],
+    "user": []
+  }
+}
+```
+
+**权限说明：**
+
+| 类别 | 权限 | 用途 |
+|------|------|------|
+| **机器人** | `im:message:send` | 发送消息到群聊 |
+| | `im:message:receive` | 接收消息事件 |
+| **群聊** | `im:chat:readonly` | 读取群信息 |
+| | `im:chat` | 群聊管理 |
+| | `im:message.group_msg` | 群消息操作 |
+| | `im:message.group_msg:readonly` | 读取群消息 |
+| **云文档** | `drive:drive` | 编辑云文件 |
+| | `drive:drive:readonly` | 查看云文件 |
+| | `space:document:retrieve` | 获取文档信息 |
+| **文档** | `docx:document` | 查看文档内容 |
+| | `docx:document:create` | 创建文档 |
+| **卡片** | `im:message.card:send` | 发送卡片消息 |
+| **事件** | `card:action:trigger` | 卡片操作回调 |
+
+配置路径：`https://open.feishu.cn/app/{YOUR_APP_ID}/auth`
+
+**2. 检查服务日志：**
+```bash
+journalctl -u ai-briefing.service -n 50 -e
+```
+
+**3. 检查 `publish_log` 数据库表：**
+```sql
+SELECT * FROM publish_log ORDER BY created_at DESC LIMIT 5;
+```
+
+**4. 验证 `.env` 配置：**
+确认 `FEISHU_APP_ID`/`FEISHU_APP_SECRET`/`FEISHU_PUSH_CHAT_ID` 是否有效。
 
 **问题：反馈按钮点击无效？**
 1.  确认事件 worker 正在运行：
