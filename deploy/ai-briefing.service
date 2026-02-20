@@ -1,0 +1,14 @@
+[Unit]
+Description=AI Briefing Daily Update
+After=network.target postgresql.service
+
+[Service]
+Type=oneshot
+User=root
+WorkingDirectory=/opt/ai_briefing
+EnvironmentFile=/opt/ai_briefing/.env
+Environment="PYTHONPATH=/opt/ai_briefing/src"
+ExecStart=/opt/ai_briefing/.venv/bin/python /opt/ai_briefing/src/main.py --run-all
+
+[Install]
+WantedBy=multi-user.target

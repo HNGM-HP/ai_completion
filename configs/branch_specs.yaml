@@ -1,0 +1,57 @@
+# 分支产出规格（需求点可随时调整）：代码按此渲染与校验，不把结构写死。
+
+branch1:
+  enabled: true
+  sections:
+    try_this_week:
+      enabled: true
+      max_items: 3
+      timebox_minutes: 30
+    bookmark:
+      enabled: true
+      max_items: 5
+    next_watch:
+      enabled: true
+      max_items: 3
+  feedback:
+    enabled: true
+    mode: command
+    commands:
+      useful: "👍 {topic_id}"
+      useless: "👎 {topic_id}"
+      skip: "⏭ {topic_id}"
+
+branch2:
+  enabled: true
+  review:
+    enabled: true
+    low_confidence_goes_to_review: true
+  attribution:
+    enabled: true
+  quoting:
+    enabled: true
+    max_quote_len: 120
+  copyright:
+    policy:
+      sentence_level_only: true
+      require_link: true
+
+factcheck:
+  enabled: true
+  max_evidence: 6
+
+gating:
+  confidence_thresholds:
+    low: 0.55
+    high: 0.80
+
+x_source:
+  default_region: Global
+  # 仅做内部风险标记；不做强制拦截。
+  robots_policy: unknown
+  rate_limit_policy:
+    # provider 级策略建议在后续实现 X provider 链时细化。
+    default:
+      max_requests_per_minute: 30
+      retry_max: 2
+      retry_backoff_seconds: 2

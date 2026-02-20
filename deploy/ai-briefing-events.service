@@ -1,0 +1,16 @@
+[Unit]
+Description=AI Briefing Feishu Events Worker
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/ai_briefing
+EnvironmentFile=/opt/ai_briefing/.env
+Environment="PYTHONPATH=/opt/ai_briefing/src"
+ExecStart=/opt/ai_briefing/.venv/bin/python -u /opt/ai_briefing/src/scripts/run_feishu_events.py
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

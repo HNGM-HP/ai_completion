@@ -1,0 +1,29 @@
+- name: "Hugging Face Blog"
+  url: "https://huggingface.co/blog/feed.xml"
+  lang: "en"
+  tags: ["hf", "ai"]
+
+- name: "Microsoft AI Blog"
+  url: "https://blogs.microsoft.com/ai/feed/"
+  lang: "en"
+  tags: ["microsoft", "industry"]
+
+- name: "MIT News AI"
+  url: "https://news.mit.edu/rss/topic/artificial-intelligence2"
+  lang: "en"
+  tags: ["mit", "academic"]
+
+- name: "NVIDIA AI Blog"
+  url: "https://blogs.nvidia.com/blog/category/deep-learning/feed/"
+  lang: "en"
+  tags: ["nvidia", "hardware"]
+
+- name: "Sebastian Raschka"
+  url: "https://magazine.sebastianraschka.com/feed"
+  lang: "en"
+  tags: ["newsletter", "learning"]
+
+- name: "Berkeley AI (BAIR)"
+  url: "https://bair.berkeley.edu/blog/feed.xml"
+  lang: "en"
+  tags: ["academic", "research"]
